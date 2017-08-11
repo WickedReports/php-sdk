@@ -1,0 +1,20 @@
+{
+    "name": "wickedreports/php-sdk",
+    "description": "PHP SDK for WickedReports",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WickedReports",
+            "homepage": "http://wickedreports.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "respect/validation": "^1.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "WickedReports": ["src"]
+        }
+    }
+}
