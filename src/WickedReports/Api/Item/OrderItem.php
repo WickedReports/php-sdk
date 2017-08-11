@@ -9,7 +9,7 @@ class OrderItem extends BaseItem {
     /**
      * @return v
      */
-    protected function validation()
+    protected static function validation()
     {
         return v::arrayType()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))

@@ -16,7 +16,7 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
     protected static $itemClass;
 
     /**
-     * @var array Collection items
+     * @var BaseItem[] Collection items
      */
     protected $items = [];
 
@@ -219,6 +219,18 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
     public function toJson()
     {
         return json_encode($this);
+    }
+
+    /**
+     * Convert array of object into array of arrays
+     * @return array
+     */
+    public function toPlainArray()
+    {
+        return array_map(function($item) {
+            /** @var $item BaseItem */
+            return $item->toArray();
+        }, $this->items);
     }
 
     /**

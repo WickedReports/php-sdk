@@ -3,13 +3,55 @@
 namespace WickedReports\Api\Item;
 
 use Respect\Validation\Validator as v;
+use WickedReports\Api\Collection\OrderItems;
+use WickedReports\Api\Collection\OrderPayments;
 
 class Order extends BaseItem {
 
     /**
+     * @return mixed
+     */
+    public function getOrderItems()
+    {
+        return isset($this->data['OrderItems']) ? $this->data['OrderItems'] : null;
+    }
+
+    /**
+     * @param array|OrderItems $items
+     */
+    public function setOrderItems($items)
+    {
+        if ($items instanceof OrderItems) {
+            $items = $items->toPlainArray();
+        }
+
+        $this->data['OrderItems'] = $items;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderPayments()
+    {
+        return isset($this->data['OrderPayments']) ? $this->data['OrderPayments'] : null;
+    }
+
+    /**
+     * @param array|OrderPayments $items
+     */
+    public function setOrderPayments($items)
+    {
+        if ($items instanceof OrderPayments) {
+            $items = $items->toPlainArray();
+        }
+
+        $this->data['OrderPayments'] = $items;
+    }
+
+    /**
      * @return v
      */
-    protected function validation()
+    protected static function validation()
     {
         return v::arrayType()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))
@@ -22,6 +64,10 @@ class Order extends BaseItem {
             ->key('City', v::stringType()->length(0, 255))
             ->key('State', v::stringType()->length(0, 255))
             ->key('SubscriptionID', v::stringType()->length(0, 500))
+
+            // Addional nested structures
+            ->key('OrderItems', v::arrayType()->each(OrderItem::getValidation()))
+            ->key('OrderPayments', v::arrayType()->each(OrderPayment::getValidation()))
         ;
     }
 

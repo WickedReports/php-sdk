@@ -12,7 +12,7 @@ abstract class BaseItem implements JsonSerializable {
      * Item data array
      * @var array
      */
-    private $data = [];
+    protected $data = [];
 
     /**
      * BaseItem constructor.
@@ -66,7 +66,7 @@ abstract class BaseItem implements JsonSerializable {
      */
     public function validate()
     {
-        $validation = $this->validation();
+        $validation = static::validation();
 
         if ( ! $validation instanceof \Respect\Validation\Validator) {
             throw new ValidationException('Validation should be instance of \Respect\Validation\Validator');
@@ -99,8 +99,21 @@ abstract class BaseItem implements JsonSerializable {
     }
 
     /**
-     * Validation must be declared here
+     * @return array
      */
-    abstract protected function validation();
+    public function toArray()
+    {
+        return $this->getData();
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getValidation()
+    {
+        return static::validation();
+    }
+
+    protected static function validation() {}
 
 }
