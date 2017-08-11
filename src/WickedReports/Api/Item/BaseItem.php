@@ -34,6 +34,16 @@ abstract class BaseItem implements JsonSerializable {
     }
 
     /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value)
+    {
+        $this->data[$name] = $value;
+        $this->validate();
+    }
+
+    /**
      * Get item data
      * @return array
      */
@@ -49,6 +59,7 @@ abstract class BaseItem implements JsonSerializable {
     public function setData(array $data)
     {
         $this->data = $data;
+        $this->validate();
     }
 
     /**
