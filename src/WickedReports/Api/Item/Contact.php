@@ -7,6 +7,11 @@ use Respect\Validation\Validator as v;
 class Contact extends BaseItem {
 
     /**
+     * @var array
+     */
+    protected $dates = ['CreateDate'];
+
+    /**
      * @return v
      */
     protected static function validation()

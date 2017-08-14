@@ -9,6 +9,7 @@ use WickedReports\Api\Collection\OrderPayments;
 use WickedReports\Api\Collection\Orders;
 use WickedReports\Api\Collection\Products;
 use WickedReports\Api\LatestEndpoint;
+use WickedReports\Exception\ValidationException;
 
 class WickedReports {
 
@@ -34,11 +35,16 @@ class WickedReports {
     /**
      * @param array|Contacts $contacts
      * @return bool|string
+     * @throws ValidationException
      */
     public function addContacts($contacts)
     {
         if (is_array($contacts)) {
             $contacts = new Contacts($contacts);
+        }
+
+        if ( ! $contacts instanceof Contacts) {
+            throw new ValidationException('$contacts must be either array or Contacts type');
         }
 
         return $this->request('contacts', 'POST', $contacts);
@@ -47,11 +53,16 @@ class WickedReports {
     /**
      * @param array|Orders $orders
      * @return bool|string
+     * @throws ValidationException
      */
     public function addOrders($orders)
     {
         if (is_array($orders)) {
             $orders = new Orders($orders);
+        }
+
+        if ( ! $orders instanceof Contacts) {
+            throw new ValidationException('$orders must be either array or Orders type');
         }
 
         return $this->request('orders', 'POST', $orders);
@@ -60,11 +71,16 @@ class WickedReports {
     /**
      * @param array|Products $products
      * @return bool|string
+     * @throws ValidationException
      */
     public function addProducts($products)
     {
         if (is_array($products)) {
             $products = new Products($products);
+        }
+
+        if ( ! $products instanceof Contacts) {
+            throw new ValidationException('$products must be either array or Products type');
         }
 
         return $this->request('products', 'POST', $products);
@@ -73,11 +89,16 @@ class WickedReports {
     /**
      * @param array|OrderPayments $payments
      * @return bool|string
+     * @throws ValidationException
      */
     public function addOrderPayments($payments)
     {
         if (is_array($payments)) {
             $payments = new OrderPayments($payments);
+        }
+
+        if ( ! $payments instanceof Contacts) {
+            throw new ValidationException('$payments must be either array or OrderPayments type');
         }
 
         return $this->request('orderpayments', 'POST', $payments);
@@ -86,11 +107,16 @@ class WickedReports {
     /**
      * @param array|OrderItems $items
      * @return bool|string
+     * @throws ValidationException
      */
     public function addOrderItems($items)
     {
         if (is_array($items)) {
             $items = new OrderItems($items);
+        }
+
+        if ( ! $items instanceof Contacts) {
+            throw new ValidationException('$items must be either array or OrderItems type');
         }
 
         return $this->request('orderitems', 'POST', $items);

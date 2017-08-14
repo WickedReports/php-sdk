@@ -9,6 +9,11 @@ use WickedReports\Api\Collection\OrderPayments;
 class Order extends BaseItem {
 
     /**
+     * @var array
+     */
+    protected $dates = ['CreateDate'];
+
+    /**
      * @return mixed
      */
     public function getOrderItems()

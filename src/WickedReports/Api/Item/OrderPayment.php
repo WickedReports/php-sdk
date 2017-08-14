@@ -7,6 +7,11 @@ use Respect\Validation\Validator as v;
 class OrderPayment extends BaseItem {
 
     /**
+     * @var array
+     */
+    protected $dates = ['PaymentDate'];
+
+    /**
      * @return v
      */
     protected static function validation()
