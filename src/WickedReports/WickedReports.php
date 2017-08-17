@@ -61,7 +61,7 @@ class WickedReports {
             $orders = new Orders($orders);
         }
 
-        if ( ! $orders instanceof Contacts) {
+        if ( ! $orders instanceof Orders) {
             throw new ValidationException('$orders must be either array or Orders type');
         }
 
@@ -79,7 +79,7 @@ class WickedReports {
             $products = new Products($products);
         }
 
-        if ( ! $products instanceof Contacts) {
+        if ( ! $products instanceof Products) {
             throw new ValidationException('$products must be either array or Products type');
         }
 
@@ -97,7 +97,7 @@ class WickedReports {
             $payments = new OrderPayments($payments);
         }
 
-        if ( ! $payments instanceof Contacts) {
+        if ( ! $payments instanceof OrderPayments) {
             throw new ValidationException('$payments must be either array or OrderPayments type');
         }
 
@@ -115,7 +115,7 @@ class WickedReports {
             $items = new OrderItems($items);
         }
 
-        if ( ! $items instanceof Contacts) {
+        if ( ! $items instanceof OrderItems) {
             throw new ValidationException('$items must be either array or OrderItems type');
         }
 

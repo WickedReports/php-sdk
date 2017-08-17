@@ -106,15 +106,27 @@ class BaseItemTest extends TestCase {
 
     public function testDatesHandling()
     {
-        $this->markTestIncomplete();
+        $item = $this->getItem([self::PROPER_DATA]);
 
-        if (0) {
-            $reflection = new ReflectionClass($a);
-            $reflection_property = $reflection->getProperty('p');
-            $reflection_property->setAccessible(true);
+        // Set dates property
+        $reflection = new \ReflectionClass($item);
+        $reflection_property = $reflection->getProperty('dates');
+        $reflection_property->setAccessible(true);
+        $reflection_property->setValue($item, ['CreateDate']);
 
-            $reflection_property->setValue($a, 2);
-        }
+        // Date with additional timezone property
+        $item->timezone = 'EST';
+        $item->CreateDate = '2017-01-01 00:02:00';
+
+        // Datetime must be converted to UTC
+        $this->assertSame('2017-01-01 05:02:00', $item->CreateDate);
+
+        // Clear timezone and set date with complex object
+        $item->CreateDate = new \DateTime('2017-01-01 00:02:00', new \DateTimeZone('EST'));
+        $item->timezone = null;
+
+        // Datetime must be converted to UTC
+        $this->assertSame('2017-01-01 05:02:00', $item->CreateDate);
     }
 
     /**

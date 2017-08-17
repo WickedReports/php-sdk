@@ -47,6 +47,9 @@ class Response {
             return null;
         }
 
+        // Add our timezone
+        $this->data['timezone'] = 'EST';
+
         return new $item_class($this->data);
     }
 
@@ -82,6 +85,11 @@ class Response {
         if (is_string($data)) {
             // Convert string to array
             $data = json_decode($data, TRUE);
+        }
+
+        if (is_object($data)) {
+            // Convert object to array
+            $data = get_object_vars($data);
         }
 
         $this->data = $data;

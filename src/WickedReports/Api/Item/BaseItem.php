@@ -21,6 +21,12 @@ abstract class BaseItem implements JsonSerializable {
     protected $dates = [];
 
     /**
+     * Is date converted to timezone already
+     * @var array
+     */
+    protected $convertedDates = [];
+
+    /**
      * BaseItem constructor.
      * @param array $data
      */
@@ -47,8 +53,10 @@ abstract class BaseItem implements JsonSerializable {
     {
         $this->data[$name] = $value;
 
+        $this->dateConversions([$name => $value], 'before');
         $this->handleDates();
         $this->validate();
+        $this->dateConversions([$name => $value], 'after');
     }
 
     /**
@@ -68,8 +76,10 @@ abstract class BaseItem implements JsonSerializable {
     {
         $this->data = $data;
 
+        $this->dateConversions($data, 'before');
         $this->handleDates();
         $this->validate();
+        $this->dateConversions($data, 'after');
     }
 
     /**
@@ -139,6 +149,38 @@ abstract class BaseItem implements JsonSerializable {
         return static::validation();
     }
 
+    /**
+     * @param array $newData
+     * @param string $stage
+     */
+    public function dateConversions(array $newData, $stage)
+    {
+        if (empty($this->dates)) {
+            return;
+        }
+
+        foreach ($this->dates as $field) {
+            $result = null;
+            $value = isset($newData[$field]) ? $newData[$field] : null;
+
+            // Date will be converted if value not empty
+            $isFilled = ! empty($value);
+
+            if ($stage === 'before' && $isFilled) {
+                // Clear state, it will be handled anew
+                $result = false;
+            }
+            else if ($stage === 'after' && $isFilled) {
+                // Handled already
+                $result = true;
+            }
+
+            if (isset($result)) {
+                $this->convertedDates[$field] = $result;
+            }
+        }
+    }
+
     /*
      * Handle dates fields: convert timezones
      * @throws ValidationException
@@ -154,6 +196,14 @@ abstract class BaseItem implements JsonSerializable {
 
             if (empty($value)) {
                 // No value provided
+                continue;
+            }
+
+            $isConverted = isset($this->convertedDates[$field]) ? $this->convertedDates[$field] : false;
+
+            if ($isConverted) {
+                // This values is already converted
+                // Prevent double conversion
                 continue;
             }
 
@@ -178,7 +228,7 @@ abstract class BaseItem implements JsonSerializable {
             }
 
             // No timezone field and not a DateTime object
-            throw new ValidationException('You must either provide `timezone` field, or a \\DateTime object for CreateDate/PaymentDate/etc field');
+            throw new ValidationException('You must either provide `timezone` field, or a DateTime object for a date field');
         }
     }
 
