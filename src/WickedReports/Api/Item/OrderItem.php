@@ -16,8 +16,8 @@ class OrderItem extends BaseItem {
             ->key('SourceID', v::stringType()->notEmpty()->length(0, 500))
             ->key('OrderID', v::stringType()->notEmpty()->length(0, 500))
             ->key('ProductID', v::stringType()->notEmpty()->length(0, 500))
-            ->key('Qty', v::intType()->notEmpty())
-            ->key('PPU', v::floatType()->notEmpty())
+            ->key('Qty', v::numeric()->notEmpty())
+            ->key('PPU', v::numeric()->notEmpty())
         ;
     }
 

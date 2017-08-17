@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php" colors="true" backupGlobals="false">
+    <testsuites>
+        <testsuite name="WickedReports TestSuite">
+            <directory>tests/WickedReports</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/WickedReports</directory>
+        </whitelist>
+    </filter>
+</phpunit>

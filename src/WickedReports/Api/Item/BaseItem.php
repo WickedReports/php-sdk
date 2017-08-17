@@ -26,7 +26,7 @@ abstract class BaseItem implements JsonSerializable {
      */
     public function __construct(array $data)
     {
-        $this->data = $data;
+        $this->setData($data);
     }
 
     /**
@@ -88,6 +88,10 @@ abstract class BaseItem implements JsonSerializable {
     public function validate()
     {
         $validation = static::validation();
+
+        if ( ! $validation) {
+            return true;
+        }
 
         if ( ! $validation instanceof \Respect\Validation\Validator) {
             throw new ValidationException('Validation should be instance of \Respect\Validation\Validator');
@@ -153,19 +157,24 @@ abstract class BaseItem implements JsonSerializable {
                 continue;
             }
 
-            if (is_string($value) && isset($this->data['timezone'])) {
-                // Use provided timezone field
-                // Build full DateTime object
-                $value = new \DateTime($value, new \DateTimeZone($this->data['timezone']));
+            try {
+                if (is_string($value) && isset($this->data['timezone'])) {
+                    // Use provided timezone field
+                    // Build full DateTime object
+                    $value = new \DateTime($value, new \DateTimeZone($this->data['timezone']));
+                }
+
+                if ($value instanceof \DateTime) {
+                    // Explicitly convert to UTC
+                    $value->setTimezone(new \DateTimeZone('UTC'));
+
+                    // Use correct format
+                    $this->data[$field] = $value->format('Y-m-d H:i:s');
+                    continue;
+                }
             }
-
-            if ($value instanceof \DateTime) {
-                // Explicitly convert to UTC
-                $value->setTimezone(new \DateTimeZone('UTC'));
-
-                // Use correct format
-                $this->data[$field] = $value->format('Y-m-d H:i:s');
-                continue;
+            catch(\Exception $e) {
+                // Convert all exceptions into our ValidationException
             }
 
             // No timezone field and not a DateTime object

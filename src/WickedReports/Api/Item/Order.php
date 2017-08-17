@@ -71,8 +71,8 @@ class Order extends BaseItem {
             ->key('SubscriptionID', v::stringType()->length(0, 500))
 
             // Addional nested structures
-            ->key('OrderItems', v::arrayType()->each(OrderItem::getValidation()))
-            ->key('OrderPayments', v::arrayType()->each(OrderPayment::getValidation()))
+            ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidation())), false)
+            ->key('OrderPayments', v::optional(v::arrayType()->each(OrderPayment::getValidation())), false)
         ;
     }
 

@@ -49,12 +49,11 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
         $firstItem = $items[key($items)];
 
         if (isset($firstItem) && ! is_array($firstItem) && ! $firstItem instanceof static::$itemClass) {
-            throw new ValidationException('Collection must be an array of arrays');
+            throw new ValidationException('Collection must be an array of arrays/objects');
         }
 
-        $this->checkCollectionSize();
-
         $this->items = $items;
+        $this->checkCollectionSize();
     }
 
     /**
@@ -138,7 +137,7 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
      */
     public function keys()
     {
-        return new static(array_keys($this->items));
+        return array_keys($this->items);
     }
 
     /**
@@ -178,6 +177,11 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
      */
     public function offsetSet($key, $value)
     {
+        if ( ! $value instanceof static::$itemClass) {
+            // Convert to item type
+            $value = new static::$itemClass($value);
+        }
+
         if (is_null($key)) {
             $this->items[] = $value;
         }
