@@ -19,16 +19,37 @@ Or manually add it to your composer.json:
 ```
 
 ## Authentication
+To use API SDK, you should have your own API key.
+
+```php
+$api = new \WickedReports\WickedReports($yourApiKey);
+$api->addOrders($orders);
+```
+
+## Examples
+You can see list of usage examples in `examples/example.php` file.
 
 
-
-### Dates
+## Dates
 
 DateTime objects are used instead of a DateTime string where the date(time) is a parameter in the method.
 
 ```php
 $datetime = new \DateTime('now',new \DateTimeZone('America/New_York'));
 ```
+
+As other way, you can use simple date-time string __with `timezone` property set.__
+
+```php
+[
+    'CreateDate' => '2017-08-01 00:05:01',
+    'timezone'   => 'EST'
+]
+```
+
+You can see list of supported timezones on [PHP.net website](http://php.net/manual/en/timezones.php).
+
+Provided date-time string will be automatically converted to UTC timezone, as it requires our API documentation.
 
 ## Testing
 
