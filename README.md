@@ -1,5 +1,8 @@
 # Wicked Reports PHP SDK (beta)
 
+## Documentation
+You can find current API documentation [in this doc](https://docs.google.com/document/d/1eY2ZU9QMU8wG9pThDcoPMr1FuaF8CmIQ-D-n665P_yU/edit).
+
 ## Install
 
 Using the composer CLI:
