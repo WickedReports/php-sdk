@@ -19,9 +19,27 @@ class WickedReportsTest extends TestCase {
         $this->assertContains('Successfully', $result->success);
     }
 
+    public function testAddContactsTestMode()
+    {
+        $api = new WickedReports(self::APIKEY, true);
+        $result = $api->addContacts([ContactTest::PROPER_DATA]);
+
+        $this->assertNotEmpty($result->success);
+        $this->assertContains('Successfully', $result->success);
+    }
+
     public function testAddOrders()
     {
         $api = new WickedReports(self::APIKEY);
+        $result = $api->addOrders([OrderTest::PROPER_DATA]);
+
+        $this->assertNotEmpty($result->success);
+        $this->assertContains('Successfully', $result->success);
+    }
+
+    public function testAddOrdersTestMode()
+    {
+        $api = new WickedReports(self::APIKEY, true);
         $result = $api->addOrders([OrderTest::PROPER_DATA]);
 
         $this->assertNotEmpty($result->success);
@@ -37,6 +55,15 @@ class WickedReportsTest extends TestCase {
         $this->assertContains('Successfully', $result->success);
     }
 
+    public function testAddProductsTestMode()
+    {
+        $api = new WickedReports(self::APIKEY, true);
+        $result = $api->addProducts([ProductTest::PROPER_DATA]);
+
+        $this->assertNotEmpty($result->success);
+        $this->assertContains('Successfully', $result->success);
+    }
+
     public function testAddOrderPayments()
     {
         $api = new WickedReports(self::APIKEY);
@@ -46,9 +73,27 @@ class WickedReportsTest extends TestCase {
         $this->assertContains('Successfully', $result->success);
     }
 
+    public function testAddOrderPaymentsTestMode()
+    {
+        $api = new WickedReports(self::APIKEY, true);
+        $result = $api->addOrderPayments([OrderPaymentTest::PROPER_DATA]);
+
+        $this->assertNotEmpty($result->success);
+        $this->assertContains('Successfully', $result->success);
+    }
+
     public function testAddOrderItems()
     {
         $api = new WickedReports(self::APIKEY);
+        $result = $api->addOrderItems([OrderItemTest::PROPER_DATA]);
+
+        $this->assertNotEmpty($result->success);
+        $this->assertContains('Successfully', $result->success);
+    }
+
+    public function testAddOrderItemsTestMode()
+    {
+        $api = new WickedReports(self::APIKEY, true);
         $result = $api->addOrderItems([OrderItemTest::PROPER_DATA]);
 
         $this->assertNotEmpty($result->success);

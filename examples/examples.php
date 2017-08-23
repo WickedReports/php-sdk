@@ -99,3 +99,12 @@ $contact = $api->getLatest('ActiveCampaign', 'contacts');
 
 // To get plain array use
 $contact->toArray();
+
+/**
+ * You can use test mode
+ */
+$api = new \WickedReports\WickedReports($yourApiKey, true);
+
+// Or:
+$api = new \WickedReports\WickedReports($yourApiKey);
+$api->setTestMode(true);

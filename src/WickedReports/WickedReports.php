@@ -24,12 +24,21 @@ class WickedReports {
     private $apiKey;
 
     /**
+     * @var bool
+     */
+    private $testMode = FALSE;
+
+    /**
      * WickedReports constructor.
      * @param string $apiKey
      */
-    public function __construct($apiKey)
+    public function __construct($apiKey, $testMode = NULL)
     {
         $this->apiKey = $apiKey;
+
+        if (isset($testMode)) {
+            $this->setTestMode($testMode);
+        }
     }
 
     /**
@@ -145,6 +154,22 @@ class WickedReports {
     }
 
     /**
+     * @return bool
+     */
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    /**
+     * @param bool $mode
+     */
+    public function setTestMode($mode)
+    {
+        $this->testMode = $mode;
+    }
+
+    /**
      * @param string $endpoint
      * @param string $method
      * @param array|BaseCollection $rawValues
@@ -165,12 +190,18 @@ class WickedReports {
             $values = json_encode($rawValues);
         }
 
+        $header = "apikey: {$this->apiKey}\r\n"
+            ."Content-Type: application/json\r\n";
+
+        if ($this->testMode) {
+            $header .= "test: 1\r\n";
+        }
+
         $options = [
             'http' => [
                 'method'  => $method,
                 'content' => $values,
-                'header'  => "apikey: {$this->apiKey}\r\n"
-                     ."Content-Type: application/json\r\n"
+                'header'  => $header
             ]
         ];
 
