@@ -1,4 +1,4 @@
-# Wicked Reports PHP SDK
+# Wicked Reports PHP SDK (beta)
 
 ## Install
 

@@ -3,6 +3,9 @@
 use WickedReports\Api\Item\Order;
 use WickedReports\Api\Collection\Orders;
 
+// Include composer autoload file
+require_once __DIR__.'/../vendor/autoload.php';
+
 /**
  * Creating item object
  */
@@ -66,14 +69,15 @@ $orders = new Orders([
         'Country'        => 'US',
         'City'           => 'New York',
         'State'          => 'New York',
-        'SubscriptionID' => 'subscription-id'
+        'SubscriptionID' => 'subscription-id',
+        'IP_Address'     => '193.198.0.1',
     ])
 ]);
 
 // You can use collection as an usual array
 echo count($orders);
-echo $orders[0];
-$order[0] = [];
+var_dump($orders[0]);
+$order[0]['SourceSystem'] = 'Infusionsoft';
 
 // For orders, you can handle OrderItems/OrderPayments right with your collection
 $order->setOrderItems([]);

@@ -44,12 +44,18 @@ class Response {
         $item_class = isset(static::TYPES[$this->type]) ? static::TYPES[$this->type] : null;
 
         if ( ! isset($item_class)) {
+            // No corresponding item type class found
             return null;
         }
 
-        // Add our timezone
-        $this->data['timezone'] = 'EST';
+        if (empty($this->data)) {
+            // No item data returned
+            return null;
+        }
 
+        // Add our timezone, we always return EST
+        $this->data['timezone'] = 'EST';
+        
         return new $item_class($this->data);
     }
 

@@ -69,6 +69,7 @@ class Order extends BaseItem {
             ->key('City', v::stringType()->length(0, 255))
             ->key('State', v::stringType()->length(0, 255))
             ->key('SubscriptionID', v::stringType()->length(0, 500))
+            ->key('IP_Address', v::stringType()->length(0, 500))
 
             // Addional nested structures
             ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidation())), false)

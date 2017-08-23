@@ -20,7 +20,8 @@ class OrderTest extends TestCase {
         'Country'        => 'US',
         'City'           => 'New York',
         'State'          => 'New York',
-        'SubscriptionID' => 'subscription-id'
+        'SubscriptionID' => 'subscription-id',
+        'IP_Address'     => '193.198.0.1',
     ];
 
     public function testSourceSystem()
