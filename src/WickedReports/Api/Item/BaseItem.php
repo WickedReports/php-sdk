@@ -3,7 +3,6 @@
 namespace WickedReports\Api\Item;
 
 use JsonSerializable;
-use Respect\Validation\Exceptions\NestedValidationException;
 use WickedReports\Exception\ValidationException;
 
 abstract class BaseItem implements JsonSerializable {
@@ -110,8 +109,14 @@ abstract class BaseItem implements JsonSerializable {
         try {
             $validation->assert($this->getData());
         }
-        catch (NestedValidationException $e) {
-            throw new ValidationException(implode("\n", $e->getMessages()), 0, $e);
+        catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+            throw new ValidationException($e->getFullMessage());
+        }
+        catch (\Respect\Validation\Exceptions\ValidationException $e) {
+            throw new ValidationException($e->getMainMessage());
+        }
+        catch (\Exception $e) {
+            throw new ValidationException($e->getMessage());
         }
 
         return true;
