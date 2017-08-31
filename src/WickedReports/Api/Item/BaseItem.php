@@ -186,6 +186,34 @@ abstract class BaseItem implements JsonSerializable {
         }
     }
 
+    /**
+     * Helper function for latest endpoint to convert from UTC back to client's timezone
+     * @param string $timezone
+     */
+    public function convertToTimezone($timezone)
+    {
+        if ( ! $this->dates || ! $this->convertedDates) {
+            // Object should be with dates and with already converted values
+            return;
+        }
+
+        foreach ($this->dates as $field) {
+            $value = $this->data[$field];
+
+            if (empty($value)) {
+                // No value provided
+                continue;
+            }
+
+            // Convert to needle timezone
+            $value = new \DateTime($value, new \DateTimeZone('UTC'));
+            $value->setTimezone(new \DateTimeZone($timezone));
+
+            // Use correct format, save value back
+            $this->data[$field] = $value->format('Y-m-d H:i:s');
+        }
+    }
+
     /*
      * Handle dates fields: convert timezones
      * @throws ValidationException

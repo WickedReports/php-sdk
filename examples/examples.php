@@ -97,7 +97,7 @@ $api->addOrders($orders);
 
 // Use latest endpoint like this
 // You will get a new Contact() object to work with
-$contact = $api->getLatest('ActiveCampaign', 'contacts');
+$contact = $api->getLatest('ActiveCampaign', 'contacts', 'EST');
 
 // To get plain array use
 $contact->toArray();

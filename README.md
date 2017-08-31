@@ -34,11 +34,10 @@ You can see list of usage examples in `examples/example.php` file.
 
 
 ## Dates
-
 DateTime objects are used instead of a DateTime string where the date(time) is a parameter in the method.
 
 ```php
-$datetime = new \DateTime('now',new \DateTimeZone('America/New_York'));
+$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
 ```
 
 As other way, you can use simple date-time string __with `timezone` property set.__
@@ -51,6 +50,8 @@ As other way, you can use simple date-time string __with `timezone` property set
 ```
 
 You can see list of supported timezones on [PHP.net website](http://php.net/manual/en/timezones.php).
+
+__You have to use one of these ways to provide date time, otherwise you will get error or wrong date saved into our DB.__
 
 Provided date-time string will be automatically converted to UTC timezone, as it requires our API documentation.
 

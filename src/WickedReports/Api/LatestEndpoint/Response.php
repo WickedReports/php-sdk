@@ -3,6 +3,7 @@
 namespace WickedReports\Api\LatestEndpoint;
 
 use WickedReports\Api\Item\BaseItem;
+use WickedReports\Exception\ValidationException;
 
 class Response {
 
@@ -25,6 +26,11 @@ class Response {
     private $data = [];
 
     /**
+     * @var string Timezone to convert back from UTC
+     */
+    private $timezone;
+
+    /**
      * Response constructor.
      * @param string $type
      * @param string $response
@@ -38,14 +44,18 @@ class Response {
     /**
      * Get object item
      * @return BaseItem|null
+     * @throws ValidationException
      */
     public function getItem()
     {
+        if (empty($this->timezone)) {
+            throw new ValidationException('You have to provide valid `timezone` value');
+        }
+
         $item_class = isset(static::TYPES[$this->type]) ? static::TYPES[$this->type] : null;
 
         if ( ! isset($item_class)) {
-            // No corresponding item type class found
-            return null;
+            throw new ValidationException('No corresponding item type class found');
         }
 
         if (empty($this->data)) {
@@ -53,10 +63,16 @@ class Response {
             return null;
         }
 
-        // Add our timezone, we always return EST
-        $this->data['timezone'] = 'EST';
-        
-        return new $item_class($this->data);
+        // We save API data as UTC, so we should build object with UTC
+        $this->data['timezone'] = 'UTC';
+
+        /** @var BaseItem $item */
+        $item = new $item_class($this->data);
+
+        // Convert item date back to needle timezone
+        $item->convertToTimezone($this->timezone);
+
+        return $item;
     }
 
     /**
@@ -69,10 +85,12 @@ class Response {
 
     /**
      * @param string $type
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
@@ -85,6 +103,7 @@ class Response {
 
     /**
      * @param array|string $data
+     * @return $this
      */
     public function setData($data)
     {
@@ -99,6 +118,25 @@ class Response {
         }
 
         $this->data = $data;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param string $timezone
+     * @return $this
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+        return $this;
     }
 
 }

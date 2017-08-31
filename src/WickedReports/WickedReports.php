@@ -135,11 +135,12 @@ class WickedReports {
      * Short-hand function for latest endpoint builder
      * @param string $sourceSystem
      * @param string $dataType
+     * @param string $timezone Timezone to convert back from UTC
      * @param string $sortBy
      * @param string $sortDirection
      * @return bool|string
      */
-    public function getLatest($sourceSystem, $dataType, $sortBy = null, $sortDirection = null)
+    public function getLatest($sourceSystem, $dataType, $timezone, $sortBy = null, $sortDirection = null)
     {
         // Build endpoint URL
         $endpoint = new LatestEndpoint($sourceSystem, $dataType);
@@ -150,7 +151,9 @@ class WickedReports {
         $response = $this->request($endpoint->makeUrl());
 
         // Show real item object
-        return (new LatestEndpoint\Response($dataType, $response))->getItem();
+        return (new LatestEndpoint\Response($dataType, $response))
+            ->setTimezone($timezone)
+            ->getItem();
     }
 
     /**
