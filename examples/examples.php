@@ -24,7 +24,8 @@ $order = new Order([
     'Country'        => 'US',
     'City'           => 'New York',
     'State'          => 'New York',
-    'SubscriptionID' => 'subscription-id'
+    'SubscriptionID' => 'subscription-id',
+    'IP_Address'     => '127.0.0.1',
 ]);
 
 // You can get values directly
