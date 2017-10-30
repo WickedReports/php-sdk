@@ -200,6 +200,10 @@ class WickedReports {
             $header .= "test: 1\r\n";
         }
 
+        if (mb_strlen($values) > 10240) {
+            throw new ValidationException('Provided data is bigger than 10 Mbytes limit');
+        }
+
         $options = [
             'http' => [
                 'method'  => $method,
