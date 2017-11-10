@@ -16,7 +16,7 @@ Or manually add it to your composer.json:
 ``` json
 {
     "require": {
-        "wickedreports/php-sdk": "0.1.*"
+        "wickedreports/php-sdk": "1.2.*"
     }
 }
 ```
