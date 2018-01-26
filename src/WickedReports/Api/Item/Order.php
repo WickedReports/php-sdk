@@ -65,11 +65,6 @@ class Order extends BaseItem {
             ->key('ContactID', v::optional(v::stringType()->length(0, 500)))
             ->key('ContactEmail', v::optional(v::stringType()->length(0, 500)))
             ->key('OrderTotal', v::numeric()->notEmpty()->length(0, 18))
-            ->key('Country', v::optional(v::stringType()->length(0, 255)))
-            ->key('City', v::optional(v::stringType()->length(0, 255)))
-            ->key('State', v::optional(v::stringType()->length(0, 255)))
-            ->key('SubscriptionID', v::optional(v::stringType()->length(0, 500)))
-            ->key('IP_Address', v::optional(v::stringType()->length(0, 500)))
 
             // Addional nested structures
             ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidation())), false)

@@ -71,6 +71,22 @@ class ContactTest extends TestCase {
         $item->Email = '';
     }
 
+    public function testNonRequiredFieldMustBeNotValidated()
+    {
+        $item = $this->getItem([[
+            'SourceSystem' => 'ActiveCampaign',
+            'SourceID'     => 'order-id',
+            'CreateDate'   => '2017-08-08 01:02:03',
+            'timezone'     => 'Europe/London',
+            'Email'        => 'test@gmail.com',
+            'FirstName'    => 'John',
+            'LastName'     => 'Wick',
+            'City'         => 1212321,
+        ]]);
+
+        // There should be no exception
+    }
+
     /**
      * @param array $args
      * @return \PHPUnit_Framework_MockObject_MockObject
