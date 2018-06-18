@@ -64,7 +64,7 @@ class Order extends BaseItem {
             ->key('CreateDate', v::date('Y-m-d H:i:s')->notEmpty())
             ->key('ContactID', v::optional(v::stringType()->length(0, 500)))
             ->key('ContactEmail', v::optional(v::stringType()->length(0, 500)))
-            ->key('OrderTotal', v::numeric()->notEmpty()->length(0, 18))
+            ->key('OrderTotal', v::numeric()->length(0, 18))
 
             // Addional nested structures
             ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidation())), false)

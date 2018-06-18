@@ -103,7 +103,7 @@ class WickedReportsTest extends TestCase {
     public function testGetLatest()
     {
         $api = new WickedReports(self::APIKEY);
-        $result = $api->getLatest('ActiveCampaign', 'contacts');
+        $result = $api->getLatest('ActiveCampaign', 'contacts', 'UTC');
 
         $this->assertNotEmpty($result);
 

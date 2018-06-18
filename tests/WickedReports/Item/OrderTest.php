@@ -78,6 +78,10 @@ class OrderTest extends TestCase {
         $this->resetItem($item);
         $item->OrderTotal = 100;
         $this->assertSame(100, $item->OrderTotal);
+
+        $this->resetItem($item);
+        $item->OrderTotal = 0;
+        $this->assertSame(0, $item->OrderTotal);
     }
 
     public function testOrderItems()
