@@ -213,7 +213,13 @@ class WickedReports {
         ];
 
         $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
+
+        try {
+            $result = file_get_contents($url, false, $context);
+        }
+        catch (\Throwable $e) {
+            throw new WickedReportsException($e->getMessage(), $e->getCode(), $e);
+        }
 
         if ($result !== false) {
             $result = json_decode($result);
