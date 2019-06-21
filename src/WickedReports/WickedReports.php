@@ -277,7 +277,7 @@ class WickedReports {
             }
             $attempt++;
             sleep(3);
-        } while (!$result && $retry && $attempt < $retry);
+        } while ($result === false && $retry && $attempt < $retry);
 
         if ($result !== false) {
             $result = json_decode($result);
