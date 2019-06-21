@@ -1,7 +1,7 @@
 # Wicked Reports PHP SDK (beta)
 
 ## Documentation
-You can find current API documentation [in this doc](https://wickedreports.helpdocs.com/getting-started-with-wicked-reports/wicked-reports-api-documentation).
+You can find current API documentation [in this doc](https://support.wickedreports.com/hc/en-us/articles/360021695292-Wicked-Reports-API-Documentation).
 
 ## Install
 
