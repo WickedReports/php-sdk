@@ -138,16 +138,21 @@ class WickedReports {
      * @param string $timezone Timezone to convert back from UTC
      * @param string $sortBy
      * @param string $sortDirection
+     * @param bool $wildcardSourceSystem
+     * @param array $cond
      * @return bool|string
      * @throws ValidationException
      * @throws WickedReportsException
      */
-    public function getLatest($sourceSystem, $dataType, $timezone, $sortBy = null, $sortDirection = null)
+    public function getLatest($sourceSystem, $dataType, $timezone, $sortBy = null, $sortDirection = null,
+                              $wildcardSourceSystem=false, $cond=[])
     {
         // Build endpoint URL
         $endpoint = new LatestEndpoint($sourceSystem, $dataType);
         $endpoint->setSortBy($sortBy);
         $endpoint->setSortDirection($sortDirection);
+        $endpoint->setWildcardSourceSystem($wildcardSourceSystem);
+        $endpoint->setConditions($cond);
 
         // Make request and get response
         $response = $this->request($endpoint->makeUrl(), 'GET', [], 5);
@@ -156,6 +161,47 @@ class WickedReports {
         return (new LatestEndpoint\Response($dataType, $response))
             ->setTimezone($timezone)
             ->getItem();
+    }
+
+    /**
+     * @param $sourceSystem
+     * @param $dataType
+     * @param $field
+     * @param bool $wildcardSourceSystem
+     * @param array $cond
+     * @return LatestEndpoint\Response
+     * @throws ValidationException
+     * @throws WickedReportsException
+     */
+    public function getMax($sourceSystem, $dataType, $field,
+                           $wildcardSourceSystem=false, $cond=[]) {
+        $endpoint = new LatestEndpoint($sourceSystem, $dataType);
+        $endpoint->setWildcardSourceSystem($wildcardSourceSystem);
+        $endpoint->setConditions($cond);
+        $endpoint->setMax($field);
+
+        $response = $this->request($endpoint->makeUrl(), 'GET', [], 5);
+
+        return (new LatestEndpoint\Response($dataType, $response));
+    }
+
+    /**
+     * @param $sourceSystem
+     * @param $dataType
+     * @param array $cond
+     * @return LatestEndpoint\Response
+     * @throws ValidationException
+     * @throws WickedReportsException
+     */
+    public function getOffset($sourceSystem, $dataType, $cond=[])
+    {
+        $endpoint = new LatestEndpoint($sourceSystem, $dataType);
+        $endpoint->setConditions($cond);
+        $endpoint->setGetOffset(true);
+
+        $response = $this->request($endpoint->makeUrl(), 'GET', [], 5);
+
+        return new LatestEndpoint\Response($dataType, $response);
     }
 
     /**
