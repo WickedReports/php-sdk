@@ -45,6 +45,7 @@ class WickedReports {
      * @param array|Contacts $contacts
      * @return bool|string
      * @throws ValidationException
+     * @throws WickedReportsException
      */
     public function addContacts($contacts)
     {
@@ -63,6 +64,7 @@ class WickedReports {
      * @param array|Orders $orders
      * @return bool|string
      * @throws ValidationException
+     * @throws WickedReportsException
      */
     public function addOrders($orders)
     {
@@ -81,6 +83,7 @@ class WickedReports {
      * @param array|Products $products
      * @return bool|string
      * @throws ValidationException
+     * @throws WickedReportsException
      */
     public function addProducts($products)
     {
@@ -99,6 +102,7 @@ class WickedReports {
      * @param array|OrderPayments $payments
      * @return bool|string
      * @throws ValidationException
+     * @throws WickedReportsException
      */
     public function addOrderPayments($payments)
     {
@@ -117,6 +121,7 @@ class WickedReports {
      * @param array|OrderItems $items
      * @return bool|string
      * @throws ValidationException
+     * @throws WickedReportsException
      */
     public function addOrderItems($items)
     {
