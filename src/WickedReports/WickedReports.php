@@ -139,6 +139,8 @@ class WickedReports {
      * @param string $sortBy
      * @param string $sortDirection
      * @return bool|string
+     * @throws ValidationException
+     * @throws WickedReportsException
      */
     public function getLatest($sourceSystem, $dataType, $timezone, $sortBy = null, $sortDirection = null)
     {
@@ -148,7 +150,7 @@ class WickedReports {
         $endpoint->setSortDirection($sortDirection);
 
         // Make request and get response
-        $response = $this->request($endpoint->makeUrl());
+        $response = $this->request($endpoint->makeUrl(), 'GET', [], 5);
 
         // Show real item object
         return (new LatestEndpoint\Response($dataType, $response))
@@ -176,9 +178,12 @@ class WickedReports {
      * @param string $endpoint
      * @param string $method
      * @param array|BaseCollection $rawValues
+     * @param bool $retry The number of times to retry on a request if it fails, or false for no retry
      * @return bool|string
+     * @throws ValidationException
+     * @throws WickedReportsException
      */
-    private function request($endpoint, $method = 'GET', $rawValues = [])
+    private function request($endpoint, $method = 'GET', $rawValues = [], $retry=false)
     {
         $url = "{$this->apiUrl}{$endpoint}";
 
@@ -214,12 +219,19 @@ class WickedReports {
 
         $context = stream_context_create($options);
 
-        try {
-            $result = file_get_contents($url, false, $context);
-        }
-        catch (\Throwable $e) {
-            throw new WickedReportsException($e->getMessage(), $e->getCode(), $e);
-        }
+        $attempt = 1;
+        $result = false;
+        do {
+            try {
+                $result = @file_get_contents($url, false, $context);
+            } catch (\Throwable $e) {
+                if (!$retry || $attempt >= $retry) {
+                    throw new WickedReportsException($e->getMessage(), $e->getCode(), $e);
+                }
+            }
+            $attempt++;
+            sleep(3);
+        } while (!$result && $retry && $attempt < $retry);
 
         if ($result !== false) {
             $result = json_decode($result);
