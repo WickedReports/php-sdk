@@ -4,6 +4,7 @@ namespace WickedReports\Item;
 
 use PHPUnit\Framework\TestCase;
 use WickedReports\Api\Item\Contact;
+use WickedReports\Api\LatestEndpoint\Response;
 use WickedReports\WickedReports;
 
 class WickedReportsTest extends TestCase {
@@ -117,4 +118,34 @@ class WickedReportsTest extends TestCase {
         $this->assertSame('ActiveCampaign', $data['SourceSystem']);
     }
 
+    public function testGetMax()
+    {
+        $api = new WickedReports(self::APIKEY);
+        $result = $api->getMax('Shopify', 'payments', 'OrderID');
+
+        $this->assertNotEmpty($result);
+
+        $this->assertInstanceOf(Response::class, $result);
+        $data = $result->getData();
+
+        $this->assertInternalType('array', $data);
+        $this->assertNotEmpty($data['OrderID']);
+
+        $this->assertInternalType('string', $data['OrderID']);
+    }
+
+    public function testGetOffset()
+    {
+        $api = new WickedReports(self::APIKEY);
+        $result = $api->getOffset('Shopify', 'contacts');
+
+        $this->assertNotEmpty($result);
+        $data = $result->getData();
+
+        $this->assertInternalType('array', $data);
+        $this->assertArrayHasKey('offset', $data);
+        $this->assertInternalType('integer', $data['offset']);
+        $this->assertEquals('Shopify', $data['sourceSystem']);
+        $this->assertEquals('contacts', $data['dataType']);
+    }
 }
