@@ -15,7 +15,7 @@ class Product extends BaseItem {
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))
             ->key('SourceID', v::stringType()->notEmpty()->length(0, 500))
             ->key('ProductName', v::stringType()->notEmpty()->length(0, 500))
-            ->key('ProductPrice', v::numeric()->notEmpty()->length(0, 18))
+            ->key('ProductPrice', v::numeric()->length(0, 18))
         ;
     }
 
