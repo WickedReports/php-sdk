@@ -270,19 +270,18 @@ class WickedReports {
 
         $context = stream_context_create($options);
 
-        $attempt = 1;
         $result = false;
-        do {
+        for ($attempt = 1; $attempt <= $retry; $attempt++) {
             try {
-                $result = @file_get_contents($url, false, $context);
+                $result = $this->funcCallWithException('file_get_contents', [$url, false, $context]);
+                break;
             } catch (\Throwable $e) {
-                if (!$retry || $attempt >= $retry) {
+                if ($attempt >= $retry) {
                     throw new WickedReportsException($e->getMessage(), $e->getCode(), $e);
                 }
             }
-            $attempt++;
             sleep(3);
-        } while ($result === false && $retry && $attempt < $retry);
+        }
 
         if ($result !== false) {
             $result = json_decode($result);
@@ -290,6 +289,25 @@ class WickedReports {
         }
 
         return false;
+    }
+
+    /**
+     * allows to throw exception on PHP function error
+     *
+     * @param $funcName
+     * @param array $args
+     * @param int $level
+     * @return mixed
+     */
+    private function funcCallWithException($funcName, $args = [], $level = E_ALL)
+    {
+        set_error_handler(function($errno, $errstr){
+            restore_error_handler();
+            throw new \Exception($errstr);
+        }, $level);
+        $result =  call_user_func_array($funcName, $args);
+        restore_error_handler();
+        return $result;
     }
 
 }
