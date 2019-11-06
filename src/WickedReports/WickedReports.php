@@ -271,7 +271,7 @@ class WickedReports {
         $context = stream_context_create($options);
 
         $result = false;
-        for ($attempt = 1; $attempt <= $retry; $attempt++) {
+        for ($attempt = 1; $attempt <= ($retry?$retry:1); $attempt++) {
             try {
                 $result = $this->funcCallWithException('file_get_contents', [$url, false, $context]);
                 break;
