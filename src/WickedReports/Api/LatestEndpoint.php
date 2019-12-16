@@ -195,7 +195,7 @@ class LatestEndpoint {
     /**
      * @param bool $wildcardSourceSystem
      */
-    public function setWildcardSourceSystem(bool $wildcardSourceSystem): void
+    public function setWildcardSourceSystem(bool $wildcardSourceSystem)
     {
         $this->wildcardSourceSystem = $wildcardSourceSystem;
     }
@@ -211,7 +211,7 @@ class LatestEndpoint {
     /**
      * @param array $conditions
      */
-    public function setConditions(array $conditions): void
+    public function setConditions(array $conditions)
     {
         $this->conditions = $conditions;
     }
@@ -243,7 +243,7 @@ class LatestEndpoint {
     /**
      * @param bool $getOffset
      */
-    public function setGetOffset(bool $getOffset): void
+    public function setGetOffset(bool $getOffset)
     {
         $this->getOffset = $getOffset;
     }
