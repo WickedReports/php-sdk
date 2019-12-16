@@ -11,8 +11,8 @@ use WickedReports\Api\Collection\Products;
 use WickedReports\Api\LatestEndpoint;
 use WickedReports\Exception\ValidationException;
 
-class WickedReports {
-
+class WickedReports
+{
     /**
      * @var string URL all API requests are sent to
      */
@@ -31,12 +31,13 @@ class WickedReports {
     /**
      * WickedReports constructor.
      * @param string $apiKey
+     * @param null $testMode
      */
     public function __construct($apiKey, $testMode = NULL)
     {
         $this->apiKey = $apiKey;
 
-        if (isset($testMode)) {
+        if ($testMode !== null) {
             $this->setTestMode($testMode);
         }
     }
@@ -149,9 +150,15 @@ class WickedReports {
      * @throws ValidationException
      * @throws WickedReportsException
      */
-    public function getLatest($sourceSystem, $dataType, $timezone, $sortBy = null, $sortDirection = null,
-                              $wildcardSourceSystem=false, $cond=[])
-    {
+    public function getLatest(
+        $sourceSystem,
+        $dataType,
+        $timezone,
+        $sortBy = null,
+        $sortDirection = null,
+        $wildcardSourceSystem=false,
+        $cond=[]
+    ) {
         // Build endpoint URL
         $endpoint = new LatestEndpoint($sourceSystem, $dataType);
         $endpoint->setSortBy($sortBy);
@@ -178,8 +185,13 @@ class WickedReports {
      * @throws ValidationException
      * @throws WickedReportsException
      */
-    public function getMax($sourceSystem, $dataType, $field,
-                           $wildcardSourceSystem=false, $cond=[]) {
+    public function getMax(
+        $sourceSystem,
+        $dataType,
+        $field,
+        $wildcardSourceSystem = false,
+        $cond=[]
+    ) {
         $endpoint = new LatestEndpoint($sourceSystem, $dataType);
         $endpoint->setWildcardSourceSystem($wildcardSourceSystem);
         $endpoint->setConditions($cond);

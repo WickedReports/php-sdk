@@ -5,8 +5,8 @@ namespace WickedReports\Api\LatestEndpoint;
 use WickedReports\Api\Item\BaseItem;
 use WickedReports\Exception\ValidationException;
 
-class Response {
-
+class Response
+{
     const TYPES = [
         'contacts'   => \WickedReports\Api\Item\Contact::class,
         'orders'     => \WickedReports\Api\Item\Order::class,
@@ -52,7 +52,7 @@ class Response {
             throw new ValidationException('You have to provide valid `timezone` value');
         }
 
-        $item_class = isset(static::TYPES[$this->type]) ? static::TYPES[$this->type] : null;
+        $item_class = static::TYPES[$this->type] ?? null;
 
         if ( ! isset($item_class)) {
             throw new ValidationException('No corresponding item type class found');
@@ -138,5 +138,4 @@ class Response {
         $this->timezone = $timezone;
         return $this;
     }
-
 }

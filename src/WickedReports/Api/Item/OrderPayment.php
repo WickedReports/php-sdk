@@ -4,8 +4,8 @@ namespace WickedReports\Api\Item;
 
 use Respect\Validation\Validator as v;
 
-class OrderPayment extends BaseItem {
-
+class OrderPayment extends BaseItem
+{
     /**
      * @var array
      */
@@ -24,5 +24,4 @@ class OrderPayment extends BaseItem {
             ->key('Status', v::stringType()->length(0, 500)->in(['', 'APPROVED', 'FAILED', 'REFUNDED', 'PARTIALLY REFUNDED']))
         ;
     }
-
 }

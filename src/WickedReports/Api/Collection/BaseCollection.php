@@ -8,8 +8,8 @@ use JsonSerializable;
 use WickedReports\Api\Item\BaseItem;
 use WickedReports\Exception\ValidationException;
 
-abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializable {
-
+abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializable
+{
     /**
      * @var string Collection item class
      */
@@ -23,6 +23,7 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
     /**
      * BaseCollection constructor.
      * @param array $items
+     * @throws ValidationException
      */
     public function __construct(array $items)
     {
@@ -80,8 +81,9 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
 
     /**
      * Create a new collection instance if the value isn't one already
-     * @param  mixed  $items
+     * @param mixed $items
      * @return static
+     * @throws ValidationException
      */
     public static function make($items = [])
     {
@@ -133,7 +135,7 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
 
     /**
      * Get the keys of the collection items
-     * @return static
+     * @return array
      */
     public function keys()
     {
@@ -182,7 +184,7 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
             $value = new static::$itemClass($value);
         }
 
-        if (is_null($key)) {
+        if ($key === null) {
             $this->items[] = $value;
         }
         else {
@@ -246,5 +248,4 @@ abstract class BaseCollection implements ArrayAccess, Countable, JsonSerializabl
             throw new ValidationException('Collection must be from 1 to 1000 items');
         }
     }
-
 }

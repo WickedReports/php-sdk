@@ -4,8 +4,8 @@ namespace WickedReports\Api\Item;
 
 use Respect\Validation\Validator as v;
 
-class Product extends BaseItem {
-
+class Product extends BaseItem
+{
     /**
      * @return v
      */
@@ -18,5 +18,4 @@ class Product extends BaseItem {
             ->key('ProductPrice', v::numeric()->length(0, 18))
         ;
     }
-
 }

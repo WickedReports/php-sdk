@@ -5,8 +5,8 @@ namespace WickedReports\Api;
 use WickedReports\Exception\ValidationException;
 use WickedReports\WickedReportsException;
 
-class LatestEndpoint {
-
+class LatestEndpoint
+{
     const ALLOWED_DATATYPES = ['contacts', 'orders', 'orderitems', 'payments', 'products'];
 
     /**
@@ -227,7 +227,7 @@ class LatestEndpoint {
     /**
      * @param false|string $getMax
      */
-    public function setMax($getMax): void
+    public function setMax($getMax)
     {
         $this->getMax = $getMax;
     }
@@ -247,5 +247,4 @@ class LatestEndpoint {
     {
         $this->getOffset = $getOffset;
     }
-
 }
