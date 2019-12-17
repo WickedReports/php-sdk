@@ -6,8 +6,8 @@ use Respect\Validation\Validator as v;
 use WickedReports\Api\Collection\OrderItems;
 use WickedReports\Api\Collection\OrderPayments;
 
-class Order extends BaseItem {
-
+class Order extends BaseItem
+{
     /**
      * @var array
      */
@@ -71,5 +71,4 @@ class Order extends BaseItem {
             ->key('OrderPayments', v::optional(v::arrayType()->each(OrderPayment::getValidation())), false)
         ;
     }
-
 }

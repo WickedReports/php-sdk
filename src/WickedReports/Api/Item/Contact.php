@@ -4,7 +4,8 @@ namespace WickedReports\Api\Item;
 
 use Respect\Validation\Validator as v;
 
-class Contact extends BaseItem {
+class Contact extends BaseItem
+{
 
     /**
      * @var array
@@ -23,5 +24,4 @@ class Contact extends BaseItem {
             ->key('Email', v::stringType()->notEmpty()->length(0, 500))
         ;
     }
-
 }

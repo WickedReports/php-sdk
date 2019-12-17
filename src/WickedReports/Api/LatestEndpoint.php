@@ -5,8 +5,8 @@ namespace WickedReports\Api;
 use WickedReports\Exception\ValidationException;
 use WickedReports\WickedReportsException;
 
-class LatestEndpoint {
-
+class LatestEndpoint
+{
     const ALLOWED_DATATYPES = ['contacts', 'orders', 'orderitems', 'payments', 'products'];
 
     /**
@@ -195,7 +195,7 @@ class LatestEndpoint {
     /**
      * @param bool $wildcardSourceSystem
      */
-    public function setWildcardSourceSystem(bool $wildcardSourceSystem): void
+    public function setWildcardSourceSystem(bool $wildcardSourceSystem)
     {
         $this->wildcardSourceSystem = $wildcardSourceSystem;
     }
@@ -211,7 +211,7 @@ class LatestEndpoint {
     /**
      * @param array $conditions
      */
-    public function setConditions(array $conditions): void
+    public function setConditions(array $conditions)
     {
         $this->conditions = $conditions;
     }
@@ -227,7 +227,7 @@ class LatestEndpoint {
     /**
      * @param false|string $getMax
      */
-    public function setMax($getMax): void
+    public function setMax($getMax)
     {
         $this->getMax = $getMax;
     }
@@ -243,9 +243,8 @@ class LatestEndpoint {
     /**
      * @param bool $getOffset
      */
-    public function setGetOffset(bool $getOffset): void
+    public function setGetOffset(bool $getOffset)
     {
         $this->getOffset = $getOffset;
     }
-
 }

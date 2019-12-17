@@ -3,9 +3,13 @@
 namespace WickedReports\Api\Item;
 
 use JsonSerializable;
+use Respect\Validation\Validator;
+use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Exceptions\ValidationException as RespectValidationException;
 use WickedReports\Exception\ValidationException;
 
-abstract class BaseItem implements JsonSerializable {
+abstract class BaseItem implements JsonSerializable
+{
 
     /**
      * Item data array
@@ -47,6 +51,7 @@ abstract class BaseItem implements JsonSerializable {
     /**
      * @param string $name
      * @param mixed $value
+     * @throws ValidationException
      */
     public function __set($name, $value)
     {
@@ -70,6 +75,7 @@ abstract class BaseItem implements JsonSerializable {
     /**
      * Set new item data
      * @param array $data
+     * @throws ValidationException
      */
     public function setData(array $data)
     {
@@ -102,17 +108,17 @@ abstract class BaseItem implements JsonSerializable {
             return true;
         }
 
-        if ( ! $validation instanceof \Respect\Validation\Validator) {
-            throw new ValidationException('Validation should be instance of \Respect\Validation\Validator');
+        if ( ! $validation instanceof Validator) {
+            throw new ValidationException(sprintf('Validation should be instance of %s', Validator::class));
         }
 
         try {
             $validation->assert($this->getData());
         }
-        catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+        catch (NestedValidationException $e) {
             throw new ValidationException($e->getFullMessage());
         }
-        catch (\Respect\Validation\Exceptions\ValidationException $e) {
+        catch (RespectValidationException $e) {
             throw new ValidationException($e->getMainMessage());
         }
         catch (\Exception $e) {
@@ -189,6 +195,7 @@ abstract class BaseItem implements JsonSerializable {
     /**
      * Helper function for latest endpoint to convert from UTC back to client's timezone
      * @param string $timezone
+     * @throws \Exception
      */
     public function convertToTimezone($timezone)
     {

@@ -4,8 +4,8 @@ namespace WickedReports\Api\Item;
 
 use Respect\Validation\Validator as v;
 
-class OrderItem extends BaseItem {
-
+class OrderItem extends BaseItem
+{
     /**
      * @return v
      */
@@ -20,5 +20,4 @@ class OrderItem extends BaseItem {
             ->key('PPU', v::numeric()->notEmpty())
         ;
     }
-
 }
