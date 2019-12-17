@@ -52,9 +52,9 @@ class Response
             throw new ValidationException('You have to provide valid `timezone` value');
         }
 
-        $item_class = static::TYPES[$this->type] ?? null;
+        $itemClass = static::TYPES[$this->type] ?? null;
 
-        if ( ! isset($item_class)) {
+        if ($itemClass === null) {
             throw new ValidationException('No corresponding item type class found');
         }
 
@@ -67,7 +67,7 @@ class Response
         $this->data['timezone'] = 'UTC';
 
         /** @var BaseItem $item */
-        $item = new $item_class($this->data);
+        $item = new $itemClass($this->data);
 
         // Convert item date back to needle timezone
         $item->convertToTimezone($this->timezone);
