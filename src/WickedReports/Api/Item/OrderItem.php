@@ -9,7 +9,7 @@ class OrderItem extends OrderSub
     /**
      * @return v
      */
-    protected static function validation()
+    protected static function validation(): v
     {
         return self::validationCommon()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))
@@ -17,17 +17,9 @@ class OrderItem extends OrderSub
         ;
     }
 
-    /**
-     * @return v
-     */
-    protected static function validationSub(): v
+    protected static function validationCommon(): v
     {
-        return self::validationCommon();
-    }
-
-    private static function validationCommon(): v
-    {
-        return v::arrayType()
+        return parent::validationCommon()
             ->key('SourceID', v::stringType()->notEmpty()->length(0, 500))
             ->key('ProductID', v::stringType()->notEmpty()->length(0, 500))
             ->key('Qty', v::numeric()->notEmpty())

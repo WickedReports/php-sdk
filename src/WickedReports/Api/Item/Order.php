@@ -56,7 +56,7 @@ class Order extends BaseItem
     /**
      * @return v
      */
-    protected static function validation()
+    protected static function validation(): v
     {
         return v::arrayType()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))

@@ -22,7 +22,7 @@ class OrderPayment extends OrderSub
     /**
      * @return v
      */
-    protected static function validation()
+    protected static function validation(): v
     {
         return self::validationCommon()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))
@@ -33,17 +33,9 @@ class OrderPayment extends OrderSub
     /**
      * @return v
      */
-    protected static function validationSub()
+    protected static function validationCommon(): v
     {
-        return self::validationCommon();
-    }
-
-    /**
-     * @return v
-     */
-    private static function validationCommon()
-    {
-        return v::arrayType()
+        return parent::validationCommon()
             ->key('PaymentDate', v::date('Y-m-d H:i:s'))
             ->key('Amount', v::numeric()->min(0))
             ->key('Status', v::stringType()->length(0, 500))
