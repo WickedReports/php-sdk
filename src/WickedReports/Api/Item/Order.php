@@ -67,8 +67,8 @@ class Order extends BaseItem
             ->key('OrderTotal', v::numeric()->length(0, 18))
 
             // Addional nested structures
-            ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidation())), false)
-            ->key('OrderPayments', v::optional(v::arrayType()->each(OrderPayment::getValidation())), false)
+            ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidationSub())), false)
+            ->key('OrderPayments', v::optional(v::arrayType()->each(OrderPayment::getValidationSub())), false)
         ;
     }
 }
