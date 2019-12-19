@@ -4,17 +4,23 @@ namespace WickedReports\Api\Item;
 
 use Respect\Validation\Validator as v;
 
-class OrderItem extends BaseItem
+class OrderItem extends OrderSub
 {
     /**
      * @return v
      */
-    protected static function validation()
+    protected static function validation(): v
     {
-        return v::arrayType()
+        return self::validationCommon()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))
-            ->key('SourceID', v::stringType()->notEmpty()->length(0, 500))
             ->key('OrderID', v::stringType()->notEmpty()->length(0, 500))
+        ;
+    }
+
+    protected static function validationCommon(): v
+    {
+        return parent::validationCommon()
+            ->key('SourceID', v::stringType()->notEmpty()->length(0, 500))
             ->key('ProductID', v::stringType()->notEmpty()->length(0, 500))
             ->key('Qty', v::numeric()->notEmpty())
             ->key('PPU', v::numeric()->notEmpty())

@@ -273,5 +273,4 @@ abstract class BaseItem implements JsonSerializable
     }
 
     protected static function validation() {}
-
 }

@@ -56,7 +56,7 @@ class Order extends BaseItem
     /**
      * @return v
      */
-    protected static function validation()
+    protected static function validation(): v
     {
         return v::arrayType()
             ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 255))
@@ -67,8 +67,8 @@ class Order extends BaseItem
             ->key('OrderTotal', v::numeric()->length(0, 18))
 
             // Addional nested structures
-            ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidation())), false)
-            ->key('OrderPayments', v::optional(v::arrayType()->each(OrderPayment::getValidation())), false)
+            ->key('OrderItems', v::optional(v::arrayType()->each(OrderItem::getValidationSub())), false)
+            ->key('OrderPayments', v::optional(v::arrayType()->each(OrderPayment::getValidationSub())), false)
         ;
     }
 }
