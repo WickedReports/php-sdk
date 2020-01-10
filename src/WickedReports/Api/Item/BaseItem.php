@@ -33,9 +33,9 @@ abstract class BaseItem implements JsonSerializable
      * BaseItem constructor.
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data, bool $useValidation = true)
     {
-        $this->setData($data);
+        $this->setData($data, $useValidation);
     }
 
     /**
@@ -77,13 +77,17 @@ abstract class BaseItem implements JsonSerializable
      * @param array $data
      * @throws ValidationException
      */
-    public function setData(array $data)
+    public function setData(array $data, bool $useValidation = true)
     {
         $this->data = $data;
 
         $this->dateConversions($data, 'before');
         $this->handleDates();
-        $this->validate();
+
+        if ($useValidation) {
+            $this->validate();
+        }
+
         $this->dateConversions($data, 'after');
     }
 
