@@ -172,7 +172,7 @@ class WickedReports
         // Show real item object
         return (new LatestEndpoint\Response($dataType, $response))
             ->setTimezone($timezone)
-            ->getItem();
+            ->getItem(false);
     }
 
     /**

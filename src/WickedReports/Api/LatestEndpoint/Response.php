@@ -43,10 +43,11 @@ class Response
 
     /**
      * Get object item
+     * @param bool $useValidation
      * @return BaseItem|null
      * @throws ValidationException
      */
-    public function getItem()
+    public function getItem(bool $useValidation = true)
     {
         if (empty($this->timezone)) {
             throw new ValidationException('You have to provide valid `timezone` value');
@@ -67,7 +68,7 @@ class Response
         $this->data['timezone'] = 'UTC';
 
         /** @var BaseItem $item */
-        $item = new $itemClass($this->data);
+        $item = new $itemClass($this->data, $useValidation);
 
         // Convert item date back to needle timezone
         $item->convertToTimezone($this->timezone);
