@@ -20,7 +20,7 @@ class OrderItem extends OrderSub
 
     protected static function validationSub(): v
     {
-        return self::validationSub()
+        return self::validationCommon()
             ->key('OrderItemID', v::stringType()->notEmpty()->length(0, 500))
         ;
     }
