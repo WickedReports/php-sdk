@@ -28,7 +28,7 @@ class OrderItem extends OrderSub
     protected static function validationCommon(): v
     {
         return parent::validationCommon()
-            ->key('ProductID', v::stringType()->notEmpty()->length(0, 500))
+            ->key('ProductID', v::stringType()->length(0, 500))
             ->key('Qty', v::numeric()->notEmpty())
             ->key('PPU', v::numeric()->notEmpty())
         ;
