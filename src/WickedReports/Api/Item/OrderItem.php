@@ -29,8 +29,8 @@ class OrderItem extends OrderSub
     {
         return parent::validationCommon()
             ->key('ProductID', v::stringType()->length(0, 500))
-            ->key('Qty', v::numeric()->notEmpty())
-            ->key('PPU', v::numeric()->notEmpty())
+            ->key('Qty', v::numeric()->intVal())
+            ->key('PPU', v::numeric()->floatVal())
         ;
     }
 }
