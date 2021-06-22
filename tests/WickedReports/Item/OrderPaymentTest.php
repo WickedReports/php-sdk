@@ -82,10 +82,6 @@ class OrderPaymentTest extends TestCase {
     {
         $item = $this->getItem([self::PROPER_DATA]);
 
-        $this->expectException(ValidationException::class);
-        $item->Status = 'wrong';
-
-        $this->resetItem($item);
         $item->Status = 'APPROVED';
         $this->assertSame('APPROVED', $item->Status);
     }

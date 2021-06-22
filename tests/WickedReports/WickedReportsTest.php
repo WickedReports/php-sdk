@@ -121,7 +121,7 @@ class WickedReportsTest extends TestCase {
     public function testGetMax()
     {
         $api = new WickedReports(self::APIKEY);
-        $result = $api->getMax('Shopify', 'payments', 'OrderID');
+        $result = $api->getMax('ActiveCampaign', 'contacts', 'SourceID');
 
         $this->assertNotEmpty($result);
 
@@ -129,9 +129,9 @@ class WickedReportsTest extends TestCase {
         $data = $result->getData();
 
         $this->assertInternalType('array', $data);
-        $this->assertNotEmpty($data['OrderID']);
+        $this->assertNotEmpty($data['SourceID']);
 
-        $this->assertInternalType('string', $data['OrderID']);
+        $this->assertInternalType('string', $data['SourceID']);
     }
 
     public function testGetOffset()
