@@ -148,4 +148,15 @@ class WickedReportsTest extends TestCase {
         $this->assertEquals('Shopify', $data['sourceSystem']);
         $this->assertEquals('contacts', $data['dataType']);
     }
+
+    public function testSuccessAddMarketingData()
+    {
+        $api = new WickedReports(self::APIKEY, true);
+
+        $properData = MarketingDataTest::PROPER_DATA;
+        $result = $api->addMarketingData([$properData]);
+
+        $this->assertNotEmpty($result->success);
+        $this->assertContains('Successfully', $result->success);
+    }
 }
