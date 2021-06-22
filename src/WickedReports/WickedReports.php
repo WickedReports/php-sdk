@@ -151,7 +151,7 @@ class WickedReports
         }
 
         if ( ! $items instanceof MarketingDataCollection) {
-            throw new ValidationException('$items must be either array or MarketingDataCollection type');
+            throw new ValidationException('Items must be either array or MarketingDataCollection type');
         }
 
         return $this->request('marketing', 'POST', $items);
