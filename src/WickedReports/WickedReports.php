@@ -4,6 +4,7 @@ namespace WickedReports;
 
 use WickedReports\Api\Collection\BaseCollection;
 use WickedReports\Api\Collection\Contacts;
+use WickedReports\Api\Collection\MarketingDataCollection;
 use WickedReports\Api\Collection\OrderItems;
 use WickedReports\Api\Collection\OrderPayments;
 use WickedReports\Api\Collection\Orders;
@@ -135,6 +136,25 @@ class WickedReports
         }
 
         return $this->request('orderitems', 'POST', $items);
+    }
+
+    /**
+     * @param array|MarketingDataCollection $items
+     * @return bool|string
+     * @throws ValidationException
+     * @throws WickedReportsException
+     */
+    public function addMarketingData($items)
+    {
+        if (is_array($items)) {
+            $items = new MarketingDataCollection($items);
+        }
+
+        if ( ! $items instanceof MarketingDataCollection) {
+            throw new ValidationException('Items must be either array or MarketingDataCollection type');
+        }
+
+        return $this->request('marketing', 'POST', $items);
     }
 
     /**

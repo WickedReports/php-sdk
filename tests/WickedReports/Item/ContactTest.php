@@ -85,6 +85,7 @@ class ContactTest extends TestCase {
         ]]);
 
         // There should be no exception
+        $this->assertSame('order-id', $item->SourceID);
     }
 
     /**
