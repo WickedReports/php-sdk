@@ -19,7 +19,7 @@ class MarketingDataTest extends TestCase
         'Cost' => 33.11,
         'AdId' => 'TestAdId',
         'AccountId' => 'TestAccountId',
-        'CampaignId' => 123,
+        'CampaignId' => '123',
         'AdGroupId' => 'TestGroup',
         'ConversionCount' => 99,
         'ConversionValue' => 100,
@@ -117,7 +117,7 @@ class MarketingDataTest extends TestCase
         $item = $this->getItem([self::PROPER_DATA]);
 
         $this->expectException(ValidationException::class);
-        $item->CampaignId = 'test_fail';
+        $item->CampaignId = null;
     }
 
     public function testAdGroupId()
