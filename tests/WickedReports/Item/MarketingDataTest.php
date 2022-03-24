@@ -19,6 +19,10 @@ class MarketingDataTest extends TestCase
         'Cost' => 33.11,
         'AdId' => 'TestAdId',
         'AccountId' => 'TestAccountId',
+        'CampaignId' => '123',
+        'AdGroupId' => 'TestGroup',
+        'ConversionCount' => 99,
+        'ConversionValue' => 100,
     ];
 
     public function testSuccess()
@@ -106,6 +110,38 @@ class MarketingDataTest extends TestCase
 
         $this->expectException(ValidationException::class);
         $item->AccountId = 0;
+    }
+
+    public function testCampaignId()
+    {
+        $item = $this->getItem([self::PROPER_DATA]);
+
+        $this->expectException(ValidationException::class);
+        $item->CampaignId = null;
+    }
+
+    public function testAdGroupId()
+    {
+        $item = $this->getItem([self::PROPER_DATA]);
+
+        $this->expectException(ValidationException::class);
+        $item->AdGroupId = null;
+    }
+
+    public function testConversionCount()
+    {
+        $item = $this->getItem([self::PROPER_DATA]);
+
+        $this->expectException(ValidationException::class);
+        $item->ConversionCount = 'test_fail';
+    }
+
+    public function testConversionValue()
+    {
+        $item = $this->getItem([self::PROPER_DATA]);
+
+        $this->expectException(ValidationException::class);
+        $item->ConversionValue = 'test_fail';
     }
 
     /**
