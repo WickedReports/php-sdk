@@ -22,10 +22,17 @@ class MarketingData extends BaseItem
             ->key('Cost', v::numeric()->floatVal()->min(0)->length(0, 18))
             ->key('AdId', v::stringType()->notEmpty()->length(0, 500))
             ->key('AccountId', v::stringType()->notEmpty()->length(0, 500))
+            ->key('SourceSystem', v::stringType()->notEmpty()->length(0, 500))
+            ->key('LastUpdatedDate', v::date('Y-m-d H:i:s'))
+            ->key('ConversionCount', v::numeric()->intVal()->min(0)->length(0, 18))
+            ->key('ConversionValue', v::numeric()->floatVal()->min(0)->length(0, 18))
+            ->key('AdStatus', v::stringType()->length(0, 500))
+            ->key('CampaignStatus', v::stringType()->length(0, 500))
+            ->key('AdGroupStatus', v::stringType()->length(0, 500))
+            ->key('AdSetStatus', v::stringType()->length(0, 500))
+            ->key('AdType', v::stringType()->length(0, 500))
             ->key('CampaignId', v::stringType()->length(0, 500))
             ->key('AdGroupId', v::stringType()->length(0, 500))
-            ->key('ConversionCount', v::numeric()->length(0, 18))
-            ->key('ConversionValue', v::numeric()->length(0, 18))
         ;
     }
 }
