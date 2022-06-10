@@ -30,17 +30,29 @@ class WickedReports
     private $testMode = FALSE;
 
     /**
+     * @var bool
+     */
+    private $devMode = FALSE;
+
+    /**
+     * @var bool
+     */
+    private $realTimeMode = FALSE;
+
+
+    /**
      * WickedReports constructor.
      * @param string $apiKey
-     * @param null $testMode
+     * @param bool $testMode
+     * @param bool $realTimeMode
+     * @param bool $devMode
      */
-    public function __construct($apiKey, $testMode = NULL)
+    public function __construct($apiKey, $testMode = false, $realTimeMode = false, $devMode = false)
     {
         $this->apiKey = $apiKey;
-
-        if ($testMode !== null) {
-            $this->setTestMode($testMode);
-        }
+        $this->setTestMode($testMode);
+        $this->setRealTimeMode($realTimeMode);
+        $this->setDevMode($devMode);
     }
 
     /**
@@ -258,6 +270,40 @@ class WickedReports
     }
 
     /**
+     * @return bool
+     */
+    public function getDevMode()
+    {
+        return $this->devMode;
+    }
+
+
+    /**
+     * @param bool $mode
+     */
+    public function setDevMode($mode)
+    {
+        $this->devMode = $mode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRealTimeMode()
+    {
+        return $this->realTimeMode;
+    }
+
+    /**
+     * @param bool $mode
+     */
+    public function setRealTimeMode($mode)
+    {
+        $this->realTimeMode = $mode;
+    }
+
+
+    /**
      * @param string $endpoint
      * @param string $method
      * @param array|BaseCollection $rawValues
@@ -287,6 +333,13 @@ class WickedReports
         if ($this->testMode) {
             $header .= "test: 1\r\n";
         }
+        if ($this->devMode) {
+            $header .= "alias: DEV\r\n";
+        }
+        if ($this->realTimeMode) {
+            $header .= "realtime: 1\r\n";
+        }
+
 
         if (mb_strlen($values) > 10000000) {
             throw new ValidationException('Provided data is bigger than 10 Mbytes limit');
