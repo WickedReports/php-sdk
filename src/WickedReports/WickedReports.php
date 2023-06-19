@@ -3,6 +3,7 @@
 namespace WickedReports;
 
 use WickedReports\Api\Collection\BaseCollection;
+use WickedReports\Api\Collection\Clicks;
 use WickedReports\Api\Collection\Contacts;
 use WickedReports\Api\Collection\MarketingDataCollection;
 use WickedReports\Api\Collection\OrderItems;
@@ -155,6 +156,25 @@ class WickedReports
         }
 
         return $this->request('marketing', 'POST', $items);
+    }
+
+    /**
+     * @param array|Clicks $clicks
+     * @return bool|string
+     * @throws ValidationException
+     * @throws WickedReportsException
+     */
+    public function addClicks($clicks)
+    {
+        if (is_array($clicks)) {
+            $clicks = new Clicks($clicks);
+        }
+
+        if ( ! $clicks instanceof Clicks) {
+            throw new ValidationException('$clicks must be either array or Clicks type');
+        }
+
+        return $this->request('clicks', 'POST', $clicks);
     }
 
     /**
