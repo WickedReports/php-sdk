@@ -302,6 +302,7 @@ class WickedReports
         }
 
         $header = "apikey: {$this->apiKey}\r\n"
+            ."alias: stg\r\n"
             ."Content-Type: application/json\r\n";
 
         if ($this->testMode) {
