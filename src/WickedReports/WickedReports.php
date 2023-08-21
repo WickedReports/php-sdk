@@ -18,7 +18,7 @@ class WickedReports
     /**
      * @var string URL all API requests are sent to
      */
-    private $apiUrl = 'https://api.wickedreports.com/';
+    private $apiUrl = 'https://dev.api.wickedreports.com/';
 
     /**
      * @var string API key used to send requests
